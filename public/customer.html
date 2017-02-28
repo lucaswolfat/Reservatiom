@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+        tr {
+            border-bottom: 1px solid #ccc;
+            border-collapse: collapse;
+        }​,
+                 .orderColor{color:red;}
+        button {
+            background-color: black;
+            border-radius: 4px;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Extra styles for the cancel button */
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        /* Center the image and position the close button */
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+            position: relative;
+        }
+
+
+        .container {
+            padding: 16px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 42%; /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button (x) */
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            cursor: pointer;
+        }
+
+        /* Add Zoom Animation */
+        .animate {
+            -webkit-animation: animatezoom 0.6s;
+            animation: animatezoom 0.6s
+        }
+
+        @-webkit-keyframes animatezoom {
+            from {-webkit-transform: scale(0)}
+            to {-webkit-transform: scale(1)}
+        }
+
+        @keyframes animatezoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+        }
+</style>
+</head>
+<body ng-app="ownerView">
+<div ng-controller="Controller1">
+<form class="navbar-form navbar-left" role="search">
+    <div class="form-group">
+        <strong>First name : </strong><input type="text" ng-model="search1" class="form-control" placeholder="First name"/>
+    </div>
+    <div class="form-group">
+        <strong>Last name : </strong><input type="text" ng-model="search2" class="form-control" placeholder="Last name"/>
+    </div>
+</form>
+
+
+<table style="margin: 5%; width: 80%" class="table">
+    <thead>
+    <tr>
+        <th ng-click="changeOrder('gender')" ng-class="{dropup:order===''}">
+            Gender
+            <span ng-class="{orderColor:orderType==='gender'}" class="caret"></span>
+        </th>
+        <th  ng-click="changeOrder('firstname')"  ng-class="{dropup:order===''}">
+            Firstname
+            <span ng-class="{orderColor:orderType==='firstname'}" class="caret"></span>
+        </th>
+        <th   ng-click="changeOrder('lastname')" ng-class="{dropup:order===''}">
+            Lastname
+            <span ng-class="{orderColor:orderType==='lastname'}" class="caret"></span>
+        </th>
+        <th   ng-click="changeOrder('telephone')" ng-class="{dropup:order===''}">
+            Telephone
+            <span ng-class="{orderColor:orderType==='telephone'}" class="caret"></span>
+        </th>
+        <th   ng-click="changeOrder('emailname')" ng-class="{dropup:order===''}">
+            Email
+            <span ng-class="{orderColor:orderType==='emailname'}" class="caret"></span>
+        </th>
+        <th   ng-click="changeOrder('_id')" ng-class="{dropup:order===''}">
+            Reservationcode
+            <span ng-class="{orderColor:orderType==='_id'}" class="caret"></span>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="reservation in reservations |filter:{firstname:search1,lastname:search2} | orderBy:order+orderType">
+        <td>
+            {{reservation.gender}}
+        </td>
+        <td>
+            {{reservation.firstname}}
+        </td>
+        <td>
+            {{reservation.lastname}}
+        </td>
+        <td>
+            {{reservation.telephone}}
+        </td>
+        <td>
+            {{reservation.emailname}}
+        </td>
+        <td>
+            <a  ng-click="findReservation(reservation._id)">{{reservation._id}}</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+    <div id="id02" class="modal">
+
+        <form class="modal-content animate">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+            </div>
+
+            <div class="container">
+                <label class="col-sm-2">Confirmation Code  :</label>
+                <label class="col-sm-3">{{codeData._id}}</label>
+                <br/>
+                <br/>
+                <label class="col-sm-2">Gender  :</label>
+                <label class="col-sm-3">{{codeData.gender}}</label>
+                <br/>
+                <br/>
+                <label class="col-sm-2">Last Name  :</label>
+                <label class="col-sm-3">{{codeData.lastname}}</label>
+                <br/>
+                <br/>
+                <label class="col-sm-2">First Name  :</label>
+                <label class="col-sm-3">{{codeData.firstname}}</label>
+                <br/>
+                <br/>
+                <label class="col-sm-2">Time  :</label>
+                <label class="col-sm-1">{{codeData.date | date : "dd/MM/y"}}</label>
+                <label class="col-sm-1">{{codeData.time | date : "h:mma"}}</label>
+                <br/>
+                <br/>
+                <label class="col-sm-2">Telephone  :</label>
+                <label class="col-sm-3">{{codeData.telephone}}</label>
+                <br/>
+                <br/>
+                <label class="col-sm-2">Email  :</label>
+                <label class="col-sm-3">{{codeData.emailname}}</label>
+                <br/>
+                <br/>
+                <label class="col-sm-2">Table  :</label>
+                <label class="col-sm-3">{{codeData.table}}</label>
+                <br/>
+                <br/>
+                <label class="col-sm-2">Partysize  :</label>
+                <label class="col-sm-3">{{codeData.partysize}}</label>
+                <br/>
+                <br/>
+                <label class="col-sm-2">Status  :</label>
+                <label class="col-sm-3"></label>
+                <br/>
+                <br/>
+                <label class="col-sm-6" style="background-color:#f1f1f1"><button type="button" style="width: 100%" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn" style="width:10%;">Cancel</button>
+                </label>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+<script src="owner.js"></script>
+
+</html>

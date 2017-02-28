@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <style>
+        input[type=text], input[type=password] ,input[type=tel],input[type=email],input[type=datetime],input[type=number],
+        input[type=time], input[type=date]
+        {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        
+        button {
+            background-color: black;
+            border-radius: 4px;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        /* Center the image and position the close button */
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+            position: relative;
+        }
+
+
+        .container {
+            padding: 16px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 82%; /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button (x) */
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            cursor: pointer;
+        }
+
+        /* Add Zoom Animation */
+        .animate {
+            -webkit-animation: animatezoom 0.6s;
+            animation: animatezoom 0.6s
+        }
+
+        @-webkit-keyframes animatezoom {
+            from {-webkit-transform: scale(0)}
+            to {-webkit-transform: scale(1)}
+        }
+
+        @keyframes animatezoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+        }
+        .orderColor{color:red;}
+    </style>
+
+
+
+</head>
+<body ng-app="ownerView" >
+<div id="reservationlist" ng-controller="Controller1" class="row">
+    <div class="col-sm-4 col-sm-offset-1">
+        <button onclick="document.getElementById('id01').style.display='block' ">Make a Reservation</button>
+
+
+    </div>
+    <div class="container">
+        <nav  class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+            <form class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                    <input type="text"  ng-model="search" class="form-control" placeholder="Search Confirmation Code"/>
+                </div>
+
+            </form>
+        </nav>
+
+        <table class="table">
+            <thead>
+            <tr>
+
+                <th  ng-click="changeOrder('_id')" ng-class="{dropup:order===''}">
+                    Confirmation Code
+
+                    <span ng-class="{orderColor:orderType==='_id'}" class="caret"></span>
+                </th>
+
+                <th  ng-click="changeOrder('date')"  ng-class="{dropup:order===''}">
+                    Date
+                    <span ng-class="{orderColor:orderType==='date'}" class="caret"></span>
+                </th>
+
+                <th   ng-click="changeOrder('time')" ng-class="{dropup:order===''}">
+                    Time
+                    <span ng-class="{orderColor:orderType==='time'}" class="caret"></span>
+                </th>
+
+                <th   ng-click="changeOrder('gender')" ng-class="{dropup:order===''}">
+                    Gender
+                    <span ng-class="{orderColor:orderType==='gender'}" class="caret"></span>
+                </th>
+
+                <th   ng-click="changeOrder('firstname')" ng-class="{dropup:order===''}">
+                    Firstname
+                    <span ng-class="{orderColor:orderType==='firstname'}" class="caret"></span>
+                </th>
+
+                <th   ng-click="changeOrder('lastname')" ng-class="{dropup:order===''}">
+                    Lastname
+                    <span ng-class="{orderColor:orderType==='lastname'}" class="caret"></span>
+                </th>
+
+                <th   ng-click="changeOrder('partysize')" ng-class="{dropup:order===''}">
+                    Partysize
+                    <span ng-class="{orderColor:orderType==='partysize'}" class="caret"></span>
+                </th>
+
+                <th   ng-click="changeOrder('table')" ng-class="{dropup:order===''}">
+                    Table
+                    <span ng-class="{orderColor:orderType==='table'}" class="caret"></span>
+                </th>
+
+                <th   ng-click="changeOrder('telephone')" ng-class="{dropup:order===''}">
+                    Telephone
+                    <span ng-class="{orderColor:orderType==='telephone'}" class="caret"></span>
+                </th>
+
+                <th   ng-click="changeOrder('emailname')" ng-class="{dropup:order===''}">
+                    Email
+                    <span ng-class="{orderColor:orderType==='emailname'}" class="caret"></span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="reservation in reservations |filter:{_id:search} | orderBy:order+orderType">
+                <td>
+                   <a  ng-click="findReservation(reservation._id)">{{reservation._id}}</a>
+
+
+                </td>
+                <td>
+                    {{reservation.date | date : "dd/MM/y"}}
+                </td>
+                <td>
+                    {{reservation.time | date : "h:mma"}}
+                </td>
+                <td>
+                    {{reservation.gender}}
+                </td>
+                <td>
+                    {{reservation.firstname}}
+                </td>
+                <td >
+                    {{reservation.lastname}}
+
+                </td>
+                <td>
+                    {{reservation.partysize}}
+                </td>
+                <td>
+                    {{reservation.table}}
+                </td>
+                <td>
+                    {{reservation.telephone}}
+                </td>
+                <td>
+                    {{reservation.emailname}}
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+    <div id="id02" class="modal"  >
+
+    <form class="modal-content animate">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+        </div>
+
+        <div class="container"  >
+            <label><b>Confirmation Code:</b></label>{{codeData._id}}
+            <br/>
+            <br/>
+            <label><b>First name</b></label>
+            <input type="text"  name="firstname" ng-model=codeData.firstname required>
+
+            <label><b>Last name</b></label>
+            <input type="text"  name="lastname" ng-model=codeData.lastname required>
+            <br/>
+            <br/>
+            <form>
+                <input type="radio" name="gender" value="Mr" ng-model="codeData.gender" > Mr
+                <input type="radio" name="gender" value="Mrs" ng-model="codeData.gender"> Mrs
+                <input type="radio" name="gender" value="Ms" ng-model="codeData.gender"> Ms
+            </form>
+            <br/>
+            <br/>
+
+            <label><b>Telephone</b></label>
+            <input type="tel"   name="telephone" ng-model=codeData.telephone required>
+            <br />
+
+            <label><b>Email</b></label>
+            <input type="text"  name="email" ng-model=codeData.emailname required>
+            <br />
+
+            <label><b>Number of people</b></label>
+            <input type="number" name="partysize" ng-model=codeData.partysize min="1" max="8" required>
+            <br />
+            <label><b>Table </b></label>
+            <input type="number"  name="table" ng-model="codeData.table" min="1" max="12" required>
+            <br />
+            <label><b>Date</b></label>
+            <input type="date"   name="date" ng-model=codeData.date required>
+            <br />
+
+            <label><b>Time</b></label>
+            <input type="time"  name="time" ng-model=codeData.time  step="1800" required>
+            <br />
+
+            <button type="submit" ng-click="editReservation()">Confirm</button>
+            <button type="submit" ng-click="deleteReservation(codeData._id)" style="background-color: red">Cancel the Reservation</button>
+
+        </div>
+
+    </form>
+</div>
+</div>
+
+
+<div id="id01" class="modal" ng-controller="Controller2">
+
+    <div class="modal-content animate">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+        </div>
+
+        <div class="container">
+            <label><b>First name</b></label>
+            <input  id="firstname" type="text" placeholder="Enter First Name" name="firstname"  ng-model="formData.firstname" required>
+
+            <label><b>Last name</b></label>
+            <input id="lastname" type="text" placeholder="Enter Last Name" name="lastname"     ng-model="formData.lastname" required>
+
+            <form>
+                <input type="radio" name="gender" value="Mr" ng-model="formData.gender" checked> Mr
+                <input type="radio" name="gender" value="Mrs" ng-model="formData.gender"> Mrs
+                <input type="radio" name="gender" value="Ms" ng-model="formData.gender"> Ms
+            </form>
+            <br/>
+
+            <label><b>Telephone</b></label>
+            <input type="tel" placeholder="Enter Telephone Number" name="telephone" ng-model="formData.telephone" required>
+            <br />
+            <label><b>Email</b></label>
+            <input type="email" placeholder="Enter Email Address" name="emailname" ng-model="formData.emailname" required>
+            <br />
+
+            <label><b>Number of people</b></label>
+            <input type="number" placeholder="Enter the Number of People" name="partysize" ng-model="formData.partysize" min="1" max="8"required>
+            <br />
+
+            <label><b>Table</b></label>
+            <input type="number" placeholder="Enter the Table Number" name="table" ng-model="formData.table" min="1" max="12" required>
+            <br />
+
+            <label><b>Date</b></label>
+            <input type="date" placeholder="Enter Date you want to book" name="date" ng-model="formData.date" required>
+            <br />
+
+            <label><b>Time</b></label>
+            <input type="time" placeholder="Enter Time you want to book" name="time" ng-model="formData.time" step="1800" required>
+            <br />
+
+
+            <button type="submit" ng-click="createReservation()" style="width: 100%" >Make a Reservation</button>
+        </div>
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        </div>
+    </div>
+
+
+</div>
+
+
+</body>
+<script src="owner.js"></script>
+
+
+</html>

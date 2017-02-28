@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+    table{
+        margin: 50px;
+    }
+
+    tr,td {
+        width: 200px;
+        padding: 10px;
+    }
+
+    .button {
+        position: relative;
+        background-color: black;
+        border: none;
+        border-radius: 4px;
+        font-size: 28px;
+        color: #FFFFFF;
+        padding: 20px;
+        width: 200px;
+        text-align: center;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        text-decoration: none;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .button:after {
+        content: "";
+        background: #f1f1f1;
+        display: block;
+        position: absolute;
+        padding-top: 300%;
+        padding-left: 350%;
+        margin-left: -20px !important;
+        margin-top: -120%;
+        opacity: 0;
+        transition: all 0.8s
+    }
+
+    .button:active:after {
+        padding: 0;
+        margin: 0;
+        opacity: 1;
+        transition: 0s
+    }
+</style>
+</head>
+
+<body ng-app="reservationSystem" >
+
+
+<div >
+    <table >
+        <tr>
+            <td><strong></strong></td>
+            <td></td>
+            <td>Set the name: </td>
+            <td style="width: 400px"><input type="text" ng-model="newname"></td>
+        </tr>
+        <tr>
+            <td><strong>Current Address:</strong></td>
+            <td>Wall Street{{restaurant.address}}</td>
+            <td>Set the  address: </td>
+            <td style="width: 400px"><input type="text" ng-model="newaddress"></td>
+        </tr>
+        <tr>
+            <td><strong>Current Telephone:</strong></td>
+            <td>12345678{{restaurant.telephone}}</td>
+            <td>Set the  telephone: </td>
+            <td style="width: 400px"><input type="tel" ng-model="newtelephone" name="telephone" ></td>
+        </tr>
+        <tr>
+            <td><strong>Current Email:</strong></td>
+            <td>ljw@ljw{{restaurant.emailname}}</td>
+            <td>Set the  email: </td>
+            <td style="width: 400px"><input type="email" ng-model="newemail" name="telephone" ></td>
+        </tr>
+
+        <tr>
+            <td><strong>Current open hour:</strong></td>
+            <td><strong>Sunday:</strong></td>
+            <td>123{{restaurant.sundayopen}}-123{{restaurant.sundayclose}}</td>
+            <td style="width: 400px"><input type="time" ng-model="newsundayopen">---
+                <input type="time" ng-model="newsundayclose"></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><strong>Monday</strong></td>
+            <td>124{{sundayopen}}-124{{sundayclose}}</td>
+            <td style="width: 400px"><input type="time" ng-model="newsundayopen">---
+                <input type="time" ng-model="newsundayclose"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><strong>Tuesday</strong></td>
+            <td>124{{sundayopen}}-124{{sundayclose}}</td>
+            <td style="width: 400px"><input type="time" ng-model="newsundayopen">---
+                <input type="time" ng-model="newsundayclose"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><strong>Wednesday</strong></td>
+            <td>124{{sundayopen}}-124{{sundayclose}}</td>
+            <td style="width: 400px"><input type="time" ng-model="newsundayopen">---
+                <input type="time" ng-model="newsundayclose"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><strong>Thursday</strong></td>
+            <td>124{{sundayopen}}-124{{sundayclose}}</td>
+            <td style="width: 400px"><input type="time" ng-model="newsundayopen">---
+                <input type="time" ng-model="newsundayclose"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><strong>Friday</strong></td>
+            <td>124{{sundayopen}}-124{{sundayclose}}</td>
+            <td style="width: 400px"><input type="time" ng-model="newsundayopen">---
+                <input type="time" ng-model="newsundayclose"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><strong>Saturday</strong></td>
+            <td>124{{sundayopen}}-124{{sundayclose}}</td>
+            <td style="width: 400px"><input type="time" ng-model="newsundayopen">---
+                <input type="time" ng-model="newsundayclose"></td>
+        </tr>
+        <tr>
+            <td><button type="submit" class="button">Confirm</button>
+            </td>
+        </tr>
+
+
+    </table>
+
+
+
+
+
+
+
+<br />
+<br />
+</div>
+
+
+</body>
+<script src="core.js"></script>
+
+</html>

@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Jarvis Restaurant</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+
+    <style>
+
+
+
+        /* Full-width input fields */
+        input[type=text], input[type=password] ,input[type=tel],input[type=email],input[type=datetime],input[type=number],
+        input[type=time], input[type=date]
+        {
+            width: 100%;
+            padding: 10px 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Set a style for all buttons */
+        button {
+            background-color: black;
+            border-radius: 4px;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Extra styles for the cancel button */
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        /* Center the image and position the close button */
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+            position: relative;
+        }
+
+        .person {
+            border: 10px solid transparent;
+            margin-bottom: 25px;
+            width: 100%;
+            height: 100%;
+            opacity: 0.7;
+        }
+        .person:hover {
+            border-color: #f1f1f1;
+        }
+        .container {
+            padding: 16px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 82%; /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button (x) */
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            cursor: pointer;
+        }
+
+        /* Add Zoom Animation */
+        .animate {
+            -webkit-animation: animatezoom 0.6s;
+            animation: animatezoom 0.6s
+        }
+
+        @-webkit-keyframes animatezoom {
+            from {-webkit-transform: scale(0)}
+            to {-webkit-transform: scale(1)}
+        }
+
+        @keyframes animatezoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+        }
+
+
+        body {
+            font: 400 15px/1.8 Lato, sans-serif;
+            color: black;
+        }
+        h3, h4 {
+            margin: 10px 0 30px 0;
+            letter-spacing: 10px;
+            font-size: 20px;
+            color: #111;
+        }
+
+
+        .carousel-inner img {
+            width:1200px;
+            height: 600px;
+            margin: auto;
+        }
+        .carousel-caption h3 {
+            color: #fff !important;
+        }
+        @media (max-width: 600px) {
+            .carousel-caption {
+                display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+            }
+        }
+        .bg-1 {
+            background: #2d2d30;
+            color: #bdbdbd;
+        }
+        .bg-1 h3 {color: #fff;}
+        .bg-1 p {font-style: italic;}
+
+        .thumbnail p {
+            margin-top: 15px;
+            color: #555;
+        }
+        .nav-tabs li a {
+            color: #777;
+        }
+
+        .navbar {
+            font-family: Montserrat, sans-serif;
+            margin-bottom: 0;
+            background-color: #2d2d30;
+            border: 0;
+            font-size: 11px !important;
+            letter-spacing: 4px;
+            opacity: 0.9;
+        }
+        .navbar li a, .navbar .navbar-brand {
+            color: #d5d5d5 !important;
+        }
+        .navbar-nav li a:hover {
+            color: #fff !important;
+        }
+        .navbar-nav li.active a {
+            color: #fff !important;
+            background-color: #29292c !important;
+        }
+        .navbar-default .navbar-toggle {
+            border-color: transparent;
+        }
+        .open .dropdown-toggle {
+            color: #fff;
+            background-color: #555 !important;
+        }
+        .dropdown-menu li a {
+            color: #000 !important;
+        }
+        .dropdown-menu li a:hover {
+            background-color: red !important;
+        }
+        footer {
+            background-color: #2d2d30;
+            color: #f5f5f5;
+            padding: 20px;
+        }
+        footer a {
+            color: #f5f5f5;
+        }
+        footer a:hover {
+            color: #777;
+            text-decoration: none;
+        }
+
+
+    </style>
+</head>
+<body ng-app="reservationSystem" ng-controller="mainController"  id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+<div ng-controller="Controller4">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#myPage">{{restaurant.name}}</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#myCarousel">HOME</a></li>
+                <li><a href="#introduction">Introduction</a></li>
+
+                <li><a href="#band">Information</a></li>
+                <li><a href="#contact">Reservation</a></li>
+                <li><a href="#id01" onclick="document.getElementById('id01').style.display='block'">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+        <li data-target="#myCarousel" data-slide-to="4"></li>
+        <li data-target="#myCarousel" data-slide-to="5"></li>
+
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="image/1.jpeg"  >
+        </div>
+
+        <div class="item">
+            <img src="image/2.jpeg"  >
+        </div>
+
+        <div class="item">
+            <img src="image/3.jpeg">
+        </div>
+
+        <div class="item">
+            <img src="image/4.jpeg">
+        </div>
+
+        <div class="item">
+            <img src="image/5.jpeg">
+        </div>
+
+        <div class="item">
+            <img src="image/6.jpg">
+        </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+
+
+
+    <div id="introduction" class="container text-center">
+        <h3>THE Introduction</h3>
+        <p><em>We love food!</em></p>
+        <p>Cheesecake is a sweet dessert consisting of one or more layers. The main, and thickest layer, consists of a mixture of soft, fresh cheese (typically cream cheese or ricotta), eggs, and sugar; if there is a bottom layer it often consists of a crust or base made from crushed cookies (or digestive biscuits), graham crackers, pastry, or sponge cake.[1] It may be baked or unbaked (usually refrigerated). Cheesecake is usually sweetened with sugar and may be flavored or topped with fruit, whipped cream, nuts, cookies, fruit sauce, and/or chocolate syrup. Cheesecake can be prepared in many flavors, such as strawberry, pumpkin, key lime, chocolate, Oreo, chestnut, or toffee.</p>
+        <br>
+        <div class="row">
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Name</strong></p><br>
+                <a href="#demo" data-toggle="collapse">
+                    <img src="image/8.jpg" class="img-circle person" alt="Random Name" width="255" height="255">
+                </a>
+                <div id="demo" class="collapse">
+                    <p>Cheesecake</p>
+                    <p>I Love Cheesecake</p>
+                    <p>Cheesecake</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Name</strong></p><br>
+                <a href="#demo2" data-toggle="collapse">
+                    <img src="image/8.jpg" class="img-circle person" alt="Random Name" width="255" height="255">
+                </a>
+                <div id="demo2" class="collapse">
+                    <p>Cheesecake</p>
+                    <p>I Love Cheesecake</p>
+                    <p>Cheesecake</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Name</strong></p><br>
+                <a href="#demo3" data-toggle="collapse">
+                    <img src="image/8.jpg" class="img-circle person" alt="Random Name" width="255" height="255">
+                </a>
+                <div id="demo3" class="collapse">
+                    <p>Cheesecake</p>
+                    <p>I Love Cheesecake</p>
+                    <p>Cheesecake</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div id="band" class="container text-center" style="background-image: url(image/9.gif)">
+    <h3>Ready for the Surprise?</h3>
+    <p><em>Here is where fantastic begin!</em></p>
+    <br>
+    <div >
+        <div class="col-sm-6">
+            <p class="text-center"><strong>Restaurant Information</strong></p><br>
+            <label class="col-sm-3">Address:</label>
+            <label class="col-sm-3">{{restaurant.address}}</label>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <label class="col-sm-3">Telephone:</label>
+            <label class="col-sm-3">{{restaurant.telephone}}</label>
+            <br/>
+            <br/>
+            <label class="col-sm-3">EmailAddress:</label>
+            <label class="col-sm-3">{{restaurant.emailname}}</label>
+            <br/>
+            <br/>
+            <label class="col-sm-3">Owner Only:</label>
+            <label class="col-sm-3"><button onclick="document.getElementById('id05').style.display='block'">Edit</button></label>
+            <br/>
+            <br/>
+
+
+        </div>
+        <div class="col-sm-6">
+            <p class="text-center"><strong>Business Hours</strong></p><br>
+            <label class="col-sm-2">Sunday:</label>
+            <label class="col-sm-4">{{restaurant.sundayopen}}-{{restaurant.sundayclose}}</label>
+            <br/>
+            <br/>
+            <label class="col-sm-2">Monday:</label>
+            <label class="col-sm-4">{{restaurant.mondayopen}}-{{restaurant.mondayclose}}</label>
+            <br/>
+            <br/>
+            <label class="col-sm-2">Tuesday:</label>
+            <label class="col-sm-4">{{restaurant.tuesdayopen}}-{{restaurant.tuesdayclose}}</label>
+            <br/>
+            <br/>
+            <label class="col-sm-2">Wednesday:</label>
+            <label class="col-sm-4">{{restaurant.wednesdayopen}}-{{restaurant.wednesdayclose}}</label>
+            <br/>
+            <br/>
+            <label class="col-sm-2">Thursday:</label>
+            <label class="col-sm-4">{{restaurant.thursdayopen}}-{{restaurant.thursdayclose}}</label>
+            <br/>
+            <br/>
+            <label class="col-sm-2">Friday:</label>
+            <label class="col-sm-4">{{restaurant.fridayopen}}-{{restaurant.fridayclose}}</label>
+            <br/>
+            <br/>
+            <label class="col-sm-2">Saturday:</label>
+            <label class="col-sm-4">{{restaurant.saturdayopen}}-{{restaurant.saturdayclose}}</label>
+        </div>
+
+    </div>
+</div>
+
+    <div id="id06" class="modal">
+
+        <form class="modal-content animate">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id06').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <div class="container">
+                    <label class="col-sm-2">Current Name:</label>
+                    <label class="col-sm-2">{{restaurant.name}}</label>
+                    <label class="col-sm-2">Set the name:</label>
+                    <label class="col-sm-4"><input type="text" ng-model="restaurant.name"></label>
+                    <br/>
+                    <br/>
+                    <br/>
+
+                    <label class="col-sm-2">Current Address:</label>
+                    <label class="col-sm-2">{{restaurant.address}}</label>
+                    <label class="col-sm-2">Set the address:</label>
+                    <label class="col-sm-4"><input type="text" ng-model="restaurant.address"></label>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+
+                    <label class="col-sm-2">Current Telephone:</label>
+                    <label class="col-sm-2">{{restaurant.telephone}}</label>
+                    <label class="col-sm-2">Set the telephone:</label>
+                    <label class="col-sm-4"><input type="text" ng-model="restaurant.telephone"></label>
+                    <br/>
+                    <br/>
+                    <br/>
+
+                    <label class="col-sm-2">Current Email:</label>
+                    <label class="col-sm-2">{{restaurant.emailname}}</label>
+                    <label class="col-sm-2">Set the email:</label>
+                    <label class="col-sm-4"><input type="text" ng-model="restaurant.emailname"></label>
+                    <br/>
+                    <br/>
+                    <br/>
+
+                    <label class="col-sm-2">Current open hour</label>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <label class="col-sm-2">Sunday</label>
+                    <label class="col-sm-2">{{restaurant.sundayopen}}-</label>
+                    <label class="col-sm-2">{{restaurant.sundayclose}}</label>
+                    <label class="col-sm-2"><input type="text" ng-model="restaurant.sundayopen"></label>
+                    <label class="col-sm-2"><input type="text" ng-model="restaurant.sundayclose"></label>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <label class="col-sm-2">Monday</label>
+                    <label class="col-sm-2">{{restaurant.mondayopen}}-</label>
+                    <label class="col-sm-2">{{restaurant.mondayclose}}</label>
+                    <label class="col-sm-2"><input type="text" ng-model="new.mondayopen"></label>
+                    <label class="col-sm-2"><input type="text" ng-model="new.mondayclose"></label>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <label class="col-sm-2">Tuesday</label>
+
+                    <label class="col-sm-2">{{restaurant.tuesdayopen}}-</label>
+                    <label class="col-sm-2">{{restaurant.tuesdayclose}}</label>
+                    <label class="col-sm-2"><input type="text" ng-model="restaurant.tuesdayopen"></label>
+                    <label class="col-sm-2"><input type="text" ng-model="restaurant.tuesdayclose"></label>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <label class="col-sm-2">Wednesday</label>
+                    <label class="col-sm-2">{{restaurant.wednesdayopen}}-</label>
+                    <label class="col-sm-2">{{restaurant.wednesdayclose}}</label>
+                    <label class="col-sm-2"><input type="text" ng-model="restaurant.wednesdayopen"></label>
+                    <label class="col-sm-2"><input type="text" ng-model="restaurant.wednesdayclose"></label>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <label class="col-sm-2">Thursday</label>
+                    <label class="col-sm-2">{{restaurant.thursdayopen}}-</label>
+                    <label class="col-sm-2">{{restaurant.thursdayclose}}</label>
+                    <label class="col-sm-2"><input type="text" ng-model="restaurant.thursdayopen"></label>
+                    <label class="col-sm-2"><input type="text" ng-model="restaurant.thursdayclose"></label>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <label class="col-sm-2">Friday</label>
+                    <label class="col-sm-2">{{restaurant.fridayopen}}-</label>
+                    <label class="col-sm-2">{{restaurant.fridayclose}}</label>
+                    <label class="col-sm-2"><input type="text" ng-model="restaurant.fridayopen"></label>
+                    <label class="col-sm-2"><input type="text" ng-model="restaurant.fridayclose"></label>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <label class="col-sm-2">Saturday</label>
+                    <label class="col-sm-2">{{restaurant.saturdayopen}}-</label>
+                    <label class="col-sm-2">{{restaurant.saturdayclose}}</label>
+                    <label class="col-sm-2"><input type="text" ng-model="restaurant.saturdayopen"></label>
+                    <label class="col-sm-2"><input type="text" ng-model="restaurant.saturdayclose"></label>
+                    <br/>
+                    <br/>
+                    <br/>
+
+
+
+
+
+                    <button style="width: 90%" type="submit" ng-click="usereditReservation()" class="button">Confirm</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="id05" class="modal">
+
+    <form class="modal-content animate">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('id05').style.display='none'" class="close" title="Close Modal">&times;</span>
+        </div>
+
+        <div class="container">
+            <label><b>Username</b></label>
+            <input  id="username1" type="text" placeholder="Enter Username" name="username" ng-model="editinfo.name" required>
+
+            <label><b>Password</b></label>
+            <input id="psw1" type="password" placeholder="Enter Password" name="psw" ng-model="editinfo.psw" required>
+
+            <button  type="button" onclick="editinfo()">Login</button>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id05').style.display='none'" style="width: 10%" class="cancelbtn">Cancel</button>
+        </div>
+    </form>
+</div>
+
+</div>
+
+
+
+<!-- Container (Contact Section) -->
+<div id="contact" class="container">
+    <h3 class="text-center">Make a Reservation</h3>
+    <p class="text-center"><em>You are very welcome</em></p>
+
+    <div class="row">
+        <div class="col-md-4">
+            <p>Fan? Drop a note.</p>
+            <p><span class="glyphicon glyphicon-map-marker"></span>Lydnhurst, US</p>
+            <p><span class="glyphicon glyphicon-phone"></span>Phone: +00 1515151515</p>
+            <p><span class="glyphicon glyphicon-envelope"></span>Email: mail@mail.com</p>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <button  onclick="document.getElementById('id02').style.display='block' ">Make a Reservation</button>
+                    <br />
+                    <button  onclick="document.getElementById('id04').style.display='block'">Edit a Reservation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="id01" class="modal">
+
+        <form class="modal-content animate">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+            </div>
+
+            <div class="container">
+                <label><b>Username</b></label>
+                <input  id="username" type="text" placeholder="Enter Username" name="username"  required>
+
+                <label><b>Password</b></label>
+                <input id="psw" type="password" placeholder="Enter Password" name="psw" required>
+
+                <button id="ownerlogin" type="button" onclick="validate()">Login</button>
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id01').style.display='none'" style="width: 10%" class="cancelbtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+
+
+    <div id="id02" class="modal">
+
+        <div class="modal-content animate">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+            </div>
+
+            <div class="container">
+                <label><b>First name</b></label>
+                <input  id="firstname" type="text" placeholder="Enter First Name" name="firstname"  ng-model="formData.firstname" required>
+
+                <label><b>Last name</b></label>
+                <input id="lastname" type="text" placeholder="Enter Last Name" name="lastname"     ng-model="formData.lastname" required>
+
+                <form>
+                    <input type="radio" name="gender" value="Mr" ng-model="formData.gender" checked> Mr
+                    <input type="radio" name="gender" value="Mrs" ng-model="formData.gender"> Mrs
+                    <input type="radio" name="gender" value="Ms" ng-model="formData.gender"> Ms
+                </form>
+                <br/>
+
+                <label><b>Telephone</b></label>
+                <input type="tel" placeholder="Enter Telephone Number" name="telephone" ng-model="formData.telephone" required>
+                <br />
+                <label><b>Email</b></label>
+                <input type="email" placeholder="Enter Email Address" name="emailname" ng-model="formData.emailname" required>
+                <br />
+
+                <label><b>Number of people</b></label>
+                <input type="number" placeholder="Enter the Number of People" name="partysize" ng-model="formData.partysize" required>
+                <br />
+
+                <label><b>Date</b></label>
+                <input type="date" placeholder="Enter Date you want to book" name="date" ng-model="formData.date" required>
+                <br />
+
+                <label><b>Time</b></label>
+                <input type="time" placeholder="Enter Time you want to book" name="time" ng-model="formData.time" step="1800" required>
+                <br />
+
+
+                <button type="submit" ng-click="createReservation()">Make a Reservation</button>
+            </div>
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+            </div>
+        </div>
+
+
+    </div>
+<div ng-controller="Controller1">
+    <div id="id04" class="modal">
+
+        <form class="modal-content animate">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id04').style.display='none'" class="close" title="Close Modal">&times;</span>
+            </div>
+
+            <div class="container">
+                <label><b>Confirmation Code:</b></label>
+                <br />
+                <br />
+                <input type="text" placeholder="Enter Confirmation Code" name="confirmationcode" ng-model="confirmationcode.code" required>
+
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" name="loginbutton" ng-model="id" ng-click="findReservation()" class="cancelbtn" style="width:10%; background-color: dodgerblue">Login</button>
+
+                <button type="button" onclick="document.getElementById('id04').style.display='none'" class="cancelbtn" style="width:10%;">Cancel</button>
+
+            </div>
+        </form>
+    </div>
+
+
+
+
+    <div id="id03" class="modal"  >
+
+        <form class="modal-content animate">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
+            </div>
+
+            <div class="container"  >
+                <label><b>Confirmation Code:</b></label>{{codeData._id}}
+                <br/>
+                <br/>
+                <label><b>First name</b></label>
+                <input type="text"  name="firstname" ng-model=codeData.firstname required>
+
+                <label><b>Last name</b></label>
+                <input type="text"  name="lastname" ng-model=codeData.lastname required>
+
+                <form>
+                    <input type="radio" name="gender" value="Mr" ng-model="codeData.gender" > Mr
+                    <input type="radio" name="gender" value="Mrs" ng-model="codeData.gender"> Mrs
+                    <input type="radio" name="gender" value="Ms" ng-model="codeData.gender"> Ms
+                </form>
+                <br/>
+
+                <label><b>Telephone</b></label>
+                <input type="tel"   name="telephone" ng-model=codeData.telephone required>
+                <br />
+
+                <label><b>Email</b></label>
+                <input type="text"  name="email" ng-model=codeData.emailname required>
+                <br />
+
+                <label><b>Number of people</b></label>
+                <input type="number" name="partysize" ng-model=codeData.partysize required>
+                <br />
+
+                <label><b>Date</b></label>
+                <input type="date"   name="date" ng-model=codeData.date required>
+                <br />
+
+                <label><b>Time</b></label>
+                <input type="time"  name="time" ng-model=codeData.time  step="1800" required>
+                <br />
+
+                <button type="submit" ng-click="usereditReservation()">Confirm</button>
+                <button type="submit" ng-click="deleteReservation(codeData._id)" style="background-color: red">Cancel the Reservation</button>
+
+            </div>
+
+        </form>
+    </div>
+    <br>
+</div>
+</div>
+
+
+<!-- Footer -->
+<footer class="text-center">
+    <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </a><br><br>
+</footer>
+
+<script>
+    function  validate() {
+        var user = document.getElementById('username').value;
+        var psw = document.getElementById('psw').value;
+        if (user == "Jarvis" && psw == "123456") {
+            window.location = "owner.html";
+        }else{
+            alert('Username of Password not correct');
+        }
+    }
+
+    function  editinfo() {
+        var user = document.getElementById('username1').value;
+        var psw = document.getElementById('psw1').value;
+        if (user == "Jarvis" && psw == "123456") {
+            document.getElementById('id06').style.display='block';
+            document.getElementById('id05').style.display='none';
+
+        }else{
+            alert('Username of Password not correct');
+        }
+    }
+
+
+
+
+
+
+
+
+
+    $(document).ready(function(){
+        // Initialize Tooltip
+        $('[data-toggle="tooltip"]').tooltip();
+
+        // Add smooth scrolling to all links in navbar + footer link
+        $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+
+            // Make sure this.hash has a value before overriding default behavior
+            if (this.hash !== "") {
+
+                // Prevent default anchor click behavior
+                event.preventDefault();
+
+                // Store hash
+                var hash = this.hash;
+
+                // Using jQuery's animate() method to add smooth page scroll
+                // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top
+                }, 900, function(){
+
+                    // Add hash (#) to URL when done scrolling (default click behavior)
+                    window.location.hash = hash;
+                });
+            } // End if
+        });
+    })
+</script>
+
+<script src="core.js"></script>
+
+</body>
+</html>

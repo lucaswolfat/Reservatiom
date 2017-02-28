@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+        tr {
+            border-bottom: 1px solid #ccc;
+            border-collapse: collapse;
+        }​,
+
+            .button {
+                display: inline-block;
+                border-radius: 4px;
+                background-color: black;
+                border: none;
+                color: #FFFFFF;
+                text-align: center;
+                font-size: 28px;
+                width: 120px;
+                height: 45px;
+                transition: all 0.5s;
+                cursor: pointer;
+            }
+
+            .button span {
+                cursor: pointer;
+                display: inline-block;
+                position: relative;
+                transition: 0.5s;
+            }
+
+            .button span:after {
+                content: '\00bb';
+                position: absolute;
+                opacity: 0;
+                top: 0;
+                right: -20px;
+                transition: 0.5s;
+            }
+
+            .button:hover span {
+                padding-right: 25px;
+            }
+
+            .button:hover span:after {
+                opacity: 1;
+                right: 0;
+            }
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 34px;
+            }
+
+            .switch input {display:none;}
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+            input:checked + .slider {
+                background-color: #2196F3;
+            }
+
+            input:focus + .slider {
+                box-shadow: 0 0 1px #2196F3;
+            }
+
+            input:checked + .slider:before {
+                -webkit-transform: translateX(26px);
+                -ms-transform: translateX(26px);
+                transform: translateX(26px);
+            }
+
+            /* Rounded sliders */
+            .slider.round {
+                border-radius: 34px;
+            }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+        </style>
+</head>
+<body ng-app="ownerView" >
+<div ng-controller="Controller3" style="width: 30%; float: left; margin: 3%">
+    <div>
+    <h2 style="float: left">Auto Assign Table</h2>
+    <label style="margin: 20px" class="switch">
+        <input type="checkbox">
+        <div class="slider"></div>
+    </label>
+    </div>
+<br/>
+<br/>
+<div>
+    <input type="date" name="date" ng-model="finddata.date" required>
+<!--
+    <input type="time"  name="time" ng-model=finddata.time  step="3600" required>
+-->
+
+    <select id="timeselect" ng-model="finddata.time" required>
+        <option value="1970-01-01T16:00:00.000Z">11:00AM</option>
+        <option value="1970-01-01T17:00:00.000Z">12:00PM</option>
+        <option value="1970-01-01T18:00:00.000Z">1:00PM</option>
+        <option value="1970-01-01T19:00:00.000Z">2:00PM</option>
+        <option value="1970-01-01T20:00:00.000Z">3:00PM</option>
+        <option value="1970-01-01T21:00:00.000Z">4:00PM</option>
+        <option value="1970-01-01T22:00:00.000Z">5:00PM</option>
+        <option value="1970-01-01T23:00:00.000Z">6:00PM</option>
+        <option value="1970-01-02T00:00:00.000Z">7:00PM</option>
+        <option value="1970-01-02T01:00:00.000Z">8:00PM</option>
+        <option value="1970-01-02T02:00:00.000Z">9:00PM</option>
+        <option value="1970-01-02T03:00:00.000Z">10:00PM</option>
+        <option value="1970-01-02T04:00:00.000Z">11:00PM</option>
+    </select>
+
+    <button type="submit" ng-click=" findbyDatetime(finddata.date,finddata.time)" class="button" style="vertical-align:middle"><span>Find</span></button>
+</div>
+
+
+    
+    <table style="margin-top: 50px" class="table">
+        <thead>
+        <tr>
+            <th >
+                Confirmation Code
+            </th>
+
+            <th >
+                Partysize
+            </th>
+
+
+            <th >
+                Table
+            </th>
+            <th >
+                Edit
+            </th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr >
+            <td>
+                {{seat0._id}}
+            </td>
+            <td>
+                {{seat0.partysize}}
+            </td>
+
+            <td>
+                {{seat0.table}}
+            </td>
+            <td>
+                <select class="select" style="width: 50px" id=select1  ng-model="seat0.table">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+
+                </select>
+            </td>
+
+        </tr>
+
+        <tr >
+            <td>
+                {{seat1._id}}
+            </td>
+            <td>
+                {{seat1.partysize}}
+            </td>
+
+            <td>
+                {{seat1.table}}
+            </td>
+            <td>
+                <select class="select" style="width: 50px" id=select2  ng-model="seat1.table">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+
+                </select>
+            </td>
+
+        </tr>
+
+        <tr >
+            <td>
+                {{seat2._id}}
+            </td>
+            <td>
+                {{seat2.partysize}}
+            </td>
+
+            <td>
+                {{seat2.table}}
+            </td>
+            <td>
+                <select  class="select" style="width: 50px" id=select3  ng-model="seat2.table">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+
+                </select>
+            </td>
+
+        </tr>
+
+        <tr >
+            <td>
+                {{seat3._id}}
+            </td>
+            <td>
+                {{seat3.partysize}}
+            </td>
+
+            <td>
+                {{seat3.table}}
+            </td>
+            <td>
+                <select  class="select" style="width: 50px" id=select4  ng-model="seat3.table">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+
+                </select>
+            </td>
+
+
+        </tr>
+
+        <tr >
+            <td>
+                {{seat4._id}}
+            </td>
+            <td>
+                {{seat4.partysize}}
+            </td>
+
+            <td>
+                {{seat4.table}}
+            </td>
+            <td>
+                <select  class="select" style="width: 50px" id=select5  ng-model="seat4.table">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+
+                </select>
+            </td>
+        </tr>
+
+        <tr >
+            <td>
+                {{seat5._id}}
+            </td>
+            <td>
+                {{seat5.partysize}}
+            </td>
+
+            <td>
+                {{seat5.table}}
+            </td>
+            <td>
+                <select class="select" style="width: 50px" id=select6  ng-model="seat5.table">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+
+                </select>
+            </td>
+
+
+        </tr>
+        </tbody>
+    </table>
+
+    <button class="button" ng-click="saveTable()" type="submit"><span>Save</span></button>
+  
+
+</div>
+
+<div style="float: right; margin: 30px"><img src="image/seating.png" alt="seatingmap" width="700" height="525"></div>
+
+</body>
+<script src="owner.js"></script>
+
+</html>
